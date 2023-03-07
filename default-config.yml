@@ -1,0 +1,18 @@
+base_config:
+  auth_token: "TOKEN-HERE"
+  user_role:
+    enabled: False
+    role: "bot-user-role"
+  admin_role:
+    enabled: True
+    role: "bot-admin-role"
+games:
+  -   name:     cyber-hook
+      channel:  cyber-hook
+      enabled:  True
+  -   name:     mk64
+      channel:  mk64
+      enabled:  False
+  -   name:     csgo-surf
+      channel:  csgo
+      enabled:  True

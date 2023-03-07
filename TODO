@@ -1,0 +1,89 @@
+https://realpython.com/how-to-make-a-discord-bot-python/
+
+## General
+* [] Persist data in a file in the root of the source root dir, or a dir in the source root.
+  * [] Determine what type of data store method. sqlite, flat file json/yaml, pickle, txt.
+
+## Feature for adding records.
+* [] Arg parser for sanity, Input needs to be scrubbed and parsed.
+* [] Dates need to be normalized and properly parsed for seralization and data input. Formatting.
+* [] Need to be able to automaticcally identify user on discord ID to avoid needing to do anything for identification. Possible override capability.
+  * Basically determine a stable Unique ID for a user and determine how this is tied to the data being stored and pulled. Consider if this is enough for list functions for user names.
+* [] Need to determine data stucture for storage. Single file vs multi file. Determine sorting based on entry and if this will be statically in the data or rendered based on data on request, per request that requires it to be sorted.
+* [] Possible authentication based on role.
+* [] Factor in how async will work and if a lock and wait will be needed for crud operations.
+* [] Need a bop message showing the new placements. 
+  * old_time: 11.50
+  * new_time: 10.00
+  * wr: 8.00
+  * -1.50 | + 2.00
+* [] Data factors themselves:
+  * games
+  * categories
+  * tracks/maps
+  - How do handle default categories? config?
+* [] Process of adding categories and maps/tracks. 
+  * Admin commands?
+  * Pre initialization config. 
+  * config validation to make sure categories are valid values (not dupes)
+  * Consider issues of data config integrity of how config is the source of record while also supporting admin commands. syncing without the need of the bot server owner needing to edit the config and then restart the bot? admin role people probably should be able to do this.
+* [] Need to make sure previous record is removed.
+  * Kinda invalid, but consider how a record is determined for a specific 
+* [] Determine if all records should be recorded and just marked as historic on a pb.
+
+## Feature for viewing records.
+* [] Determine how sorting will occur. On view, or mutated on every add. Otherwise feature to sort on demand consistently will be needed. This will also be needed for remove potentially, if remove will be based on record order and not a uniq id. 
+* [] Show time diffs between records. 
+* [] Max number of records?
+* [] Formatting?
+* [] Being able to:
+  * Request times for map/track (categories?)
+  * User records for map/track
+
+## Feature for removing records.
+* [] Possible authentication based on role.
+* [] Determine method of deleting, by ID, by time, other meta data. Emotes? (Would be interesting logic to handle reading and removing these
+* [] Possibly a configurable admin role that delete any time. Anyone else just needs regular role but can only remove times they submitted.
+
+## Discord API general
+* [x] Create bot user.
+* [] Handle authentication process.
+* [] Containerized.
+* [] Return formatting.
+* [] Central Config.
+
+## Config
+* [] Custom Time Format for Games.
+* [] Multigame support.
+* [] Multi/Single channel support.
+  * Probably just a toggle in the game config section. Forces all commands to require an additional arg of the game.
+
+## * Add/Remove/List Map/Track feature
+
+
+## Future:
+* [] Support for any game. Need to consider how to enable/configure this. 
+* [] Perhaps configured by channel? Could be something you could configure in an init config. 
+  * [] Game enabled?: game channel. (Validate same channel is not used, or come up with some other method to avoid a conflict)
+* [] Support for scores, not just times. 
+
+
+## Agenda
+---
+Evolving agenda
+* [X] - Santize working directory for commits.
+  - Need to really just add a pattern to gitignore to ignore test files, and get a pattern setup to safely injest the auth token. 
+    - (This will need to be expanded to support multiple configurations)
+* [X] - Initialize initial base config layout. 
+    - (This will need to eventually be modular)
+* [X] - Research role nonsense.
+  * Want to try two more things:
+    * add_check() Command method. How!?
+    * Creating a custom decorator that evokes the role check. https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#checks
+* [] - Determine constraints on time entry and validation.
+* [] - Create initial add record command.
+* [] - Experiment with layouts. 
+    - (Ironscape Ironbot has an interesting embedded example)
+* [] - Work on initial layout of data storage and data structure design.
+    - Leaning on a simple json/yaml model. Will need to consider using a semaphore to lock the file to avoid async pain.
+    - An alternative would be sqllite but would need to be very careful of async logic. 

@@ -1,0 +1,5 @@
+venv/
+secrets
+sandbox*
+config.yml
+.vscode/
