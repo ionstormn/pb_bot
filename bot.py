@@ -96,10 +96,12 @@ async def add(ctx, name='add_stuff', **args):
 async def on_command_error(ctx, error):
     if isinstance(error, InvalidChannelCheckFailure):
         await ctx.send(error)
+    if isinstance(error, discord.ext.commands.errors.MissingRole):
+        await ctx.send(error)
 
 @add.error
 async def add_error(ctx, error):
-    print("Add Command Error. : [{error}]")
+    print(f"Add Command Error. : [{error}]")
 
 # Launch
 bot.run(config["base_config"]["auth_token"])
