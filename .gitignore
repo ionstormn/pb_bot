@@ -1,5 +1,8 @@
+__pycache__
 venv/
 secrets
 sandbox*
 config.yml
 .vscode/
+notes
+test_data/
