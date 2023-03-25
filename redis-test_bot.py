@@ -44,7 +44,17 @@ class PB_Bot():
         # Fake Runtime
         # This will also include some other meta data sent to the processor. Or we strip it out and only send what is needed.
         # For ex: Discord ID.
-        RecordProcessor('mk64', self.redis_conn).add_record('Moo Moo Farm', 'nonsc-3lap', '0:33.55')
+        try:
+            RecordProcessor('mk64', self.redis_conn).add_record('Moo Moo Farm', 'nonsc_flap', '0:33.55')
+            RecordProcessor('mk64', self.redis_conn).add_record("Bowser's Castle", 'nonsc_3lap', '0:33.55')
+            # Invalid Map Name
+            #RecordProcessor('mk64', self.redis_conn).add_record("Bowser Castle", 'nonsc_3lap', '0:33.55')
+            # Invalid Category Name
+            #RecordProcessor('mk64', self.redis_conn).add_record("Bowser's Castle", 'nonsc-3lap', '0:33.55')
+        except RecordProcessor.UnknownMapException as e:
+            print(f'[ERROR] {e}. Discarding Record Entry')
+        except RecordProcessor.UnknownCategoryException as e:
+            print(f'[ERROR] {e}. Discarding Record Entry')
 
     def main(self):
         self.load_core_config()
