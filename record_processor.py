@@ -11,6 +11,8 @@ class RecordProcessor():
         pass
     class UnknownCategoryException(Exception):
         pass
+    class RecordTimeFormatException(Exception):
+        pass
 
     def __init__(self, game, redis_conn):
         self.redis = redis_conn
@@ -22,9 +24,13 @@ class RecordProcessor():
         # Could optionally test both and pick what passes....
         # Could also add a millisecond precision config option.
         # [TODO] This needs to be expanded to support custom formats and multiple formats to validate. For ex: Long surf times.
-        time_format = '%M:%S.%f'
-        time = datetime.datetime.strptime(record_time, time_format)
-        formatted_time = time.strftime(time_format)[:-3]
+        # [TODO] Add reasonable failure state that can be handled by the bot.
+        try:
+            time_format = '%M:%S.%f'
+            time = datetime.datetime.strptime(record_time, time_format)
+            formatted_time = time.strftime(time_format)[:-3]
+        except:
+            raise self.RecordTimeFormatException(f'Failed to process time [{record_time}] with format [{time_format}]')
         return formatted_time
 
 
